@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>API列表</title>
+    <style>
+    * {margin:0; padding:0;}
+    body {padding:20px; line-height: 1.5;}
+    h1 {font-size: 32px; font-weight: bold;}
+    h2 {font-size: 24px; font-weight: bold;}
+    .intro {margin-bottom: 40px;}
+    .intro h1 {text-align: center;}
+    .api {padding-bottom: 10px; margin-bottom: 20px;}
+    .api dd {padding-left: 20px;}
+    .api a {margin-right: 10px;}
+    .api h2 {margin-bottom: 20px; background: #E4E4E4;}
+    .api p {margin-top: 20px;}
+    .api dl {margin-top: 20px;}
+    </style>
+</head>
+<body>
+    <div class="intro">
+        <h1>API列表<span class="api-number"></span></h1>
+        <p><strong>API格式为：</strong><span style="background:yellow;">http://host:port/API/接口名</span>。返回的数据格式是JSON，具体见各接口的示例。</p>
+    </div>
+    
+    <div class="api">
+        <h2>getColleges</h2>
+        <p>获取所有的学院</p>
+        <p>请求方式：GET</p>
+        <dl>
+            <dt>参数无</dt>
+        </dl>
+        <p><a href="getColleges" target="_blank">返回数据示例</a></p>
+    </div>
+    
+    <div class="api">
+        <h2>getSubjects</h2>
+        <p>获取所有的学科</p>
+        <p>请求方式：GET</p>
+        <dl>
+            <dt>参数无</dt>
+        </dl>
+        <p><a href="getSubjects" target="_blank">返回数据示例</a></p>
+    </div>
+    
+    <div class="api">
+        <h2>getCollegeById</h2>
+        <p>根据id获取学院</p>
+        <p>请求方式：GET</p>
+        <dl>
+            <dt>college</dt>
+            <dd>学院id</dd>
+        </dl>
+        <p><a href="getCollegeById?college=http://frdc.com/org/resource/0222d5fcb0ebd987f75a6dafa12c564b" target="_blank">返回数据示例</a></p>
+    </div>
+    
+    <div class="api">
+        <h2>getSubjectById</h2>
+        <p>根据id获取学科</p>
+        <p>请求方式：GET</p>
+        <dl>
+            <dt>subject</dt>
+            <dd>学科id</dd>
+        </dl>
+        <p><a href="getSubjectById?subject=http://frdc.com/discipline/resource/250393bb5202ce949d77697557275cb7" target="_blank">返回数据示例</a></p>
+    </div>
+    
+    <div class="api">
+        <h2>getTopAuthors</h2>
+        <p>获取Top作者</p>
+        <p>请求方式：GET</p>
+        <dl>
+            <dt>sort</dt>
+            <dd>排序方式，comprehensive表示综合排序，number表示按发文量排序</dd>
+            <dt>collage</dt>
+            <dd>学院id。注意，学科id和学院id是不共存的，如果有学科id则使用学科id，否则使用学院id，如果两者都没有，则以学校为单位</dd>
+            <dt>subject</dt>
+            <dd>学科id</dd>
+            <dt>limit</dt>
+            <dd>数量限制</dd>
+        </dl>
+        <p>
+            <a href="getTopAuthors?sort=comprehensive&limit=8" target="_blank">返回数据示例：综合排序，8个</a>
+            <a href="getTopAuthors?sort=number&limit=20" target="_blank">返回数据示例：按发文量排序，20个</a>
+        </p>
+    </div>
+    
+    <div class="api">
+        <h2>getTypes</h2>
+        <p>获取内容类型</p>
+        <p>请求方式：GET</p>
+        <dl>
+            <dt>collage</dt>
+            <dd>学院id。学科id和学院id是不共存的（下面的接口不再赘述），学科id优先，如果两个参数都不存在，则以学校为单位</dd>
+            <dt>subject</dt>
+            <dd>学科id</dd>
+        </dl>
+        <p>
+            <a href="getTypes" target="_blank">返回数据示例</a>
+        </p>
+    </div>
+    
+    <div class="api">
+        <h2>getAcademicNews</h2>
+        <p>获取学术快讯</p>
+        <p>请求方式：GET</p>
+        <dl>
+            <dt>collage</dt>
+            <dd>学院id</dd>
+            <dt>subject</dt>
+            <dd>学科id</dd>
+            <dt>limit</dt>
+            <dd>数量限制</dd>
+        </dl>
+        <p>
+            <a href="getAcademicNews?limit=10" target="_blank">返回数据示例</a>
+        </p>
+    </div>
+    
+    <div class="api">
+        <h2>getAchievements</h2>
+        <p>获取获奖成果</p>
+        <p>请求方式：GET</p>
+        <dl>
+            <dt>collage</dt>
+            <dd>学院id</dd>
+            <dt>subject</dt>
+            <dd>学科id</dd>
+            <dt>limit</dt>
+            <dd>数量限制</dd>
+        </dl>
+        <p>
+            <a href="getAchievements?limit=10" target="_blank">返回数据示例</a>
+        </p>
+    </div>
+    
+    <div class="api">
+        <h2>getArticlesByReference</h2>
+        <p>按引用量获取论文</p>
+        <p>请求方式：GET</p>
+        <dl>
+            <dt>collage</dt>
+            <dd>学院id</dd>
+            <dt>subject</dt>
+            <dd>学科id</dd>
+            <dt>limit</dt>
+            <dd>数量限制</dd>
+        </dl>
+        <p>
+            <a href="getArticlesByReference?limit=20" target="_blank">返回数据示例</a>
+        </p>
+    </div>
+    
+    <div class="api">
+        <h2>getArticlesByDownload</h2>
+        <p>按下载量获取论文</p>
+        <p>请求方式：GET</p>
+        <dl>
+            <dt>collage</dt>
+            <dd>学院id</dd>
+            <dt>subject</dt>
+            <dd>学科id</dd>
+            <dt>period</dt>
+            <dd>时间周期。month代表月下载量，week代表星期下载量，不写代表综合下载量</dd>
+            <dt>limit</dt>
+            <dd>数量限制</dd>
+        </dl>
+        <p>
+            <a href="getArticlesByDownload?limit=10" target="_blank">返回数据示例</a>
+        </p>
+    </div>
+    
+    <div class="api">
+        <h2>getSiteStats</h2>
+        <p>站点统计</p>
+        <p>请求方式：GET</p>
+        <dl>
+            <dt>无</dt>
+        </dl>
+        <p>
+            <a href="getSiteStats" target="_blank">返回数据示例</a>
+        </p>
+    </div>
+    
+    <div class="api">
+        <h2>getAchievementById</h2>
+        <p>根据id获取成果信息</p>
+        <p>请求方式：GET</p>
+        <dl>
+            <dt>id</dt>
+            <dd>成果id</dd>
+        </dl>
+        <p>
+            <a href="getAchievementById?id=1" target="_blank">返回数据示例</a>
+        </p>
+    </div>
+    
+    <div class="api">
+        <h2>getArticleById</h2>
+        <p>根据id获取论文信息</p>
+        <p>请求方式：GET</p>
+        <dl>
+            <dt>id</dt>
+            <dd>论文id</dd>
+        </dl>
+        <p>
+            <a href="getArticleById?id=1" target="_blank">返回数据示例</a>
+        </p>
+    </div>
+    
+    <div class="api">
+        <h2>getNewById</h2>
+        <p>根据id获取学术快讯。大段文本内容别忘了转义</p>
+        <p>请求方式：GET</p>
+        <dl>
+            <dt>id</dt>
+            <dd>学术快讯id</dd>
+        </dl>
+        <p>
+            <a href="getNewById?id=1" target="_blank">返回数据示例</a>
+        </p>
+    </div>
+    
+    <div class="api">
+        <h2>search</h2>
+        <p>普通检索</p>
+        <p>请求方式：GET</p>
+        <dl>
+            <dt>kw</dt>
+            <dd>关键词</dd>
+            <dt>sort</dt>
+            <dd>排序方式。comprehensive表示综合排序（默认），time表示按时间降序</dd>
+            <dt>page</dt>
+            <dd>第几页。默认为1，表示第1页</dd>
+            <dt>pre</dt>
+            <dd>每页多少条。默认为10</dd>
+        </dl>
+        <p>
+            <a href="search?kw=金正恩" target="_blank">返回数据示例</a>
+        </p>
+    </div>
+    
+    <div class="api">
+        <h2>adsearch</h2>
+        <p>高级检索</p>
+        <p>请求方式：GET</p>
+        <dl>
+            <dt>sort</dt>
+            <dd>排序方式。comprehensive表示综合排序（默认），time表示按时间降序</dd>
+            <dt>page</dt>
+            <dd>第几页。默认为1，表示第1页</dd>
+            <dt>pre</dt>
+            <dd>每页多少条。默认为10</dd>
+            <dt>logic1</dt>
+            <dd>逻辑词1</dd>
+            <dt>field1</dt>
+            <dd>检索途径1</dd>
+            <dt>kw1</dt>
+            <dd>关键词1</dd>
+            <dt>logic2</dt>
+            <dd>逻辑词2</dd>
+            <dt>field2</dt>
+            <dd>检索途径2</dd>
+            <dt>kw2</dt>
+            <dd>关键词2</dd>
+            <dt>...</dt>
+        </dl>
+        <p>
+            <a href="adsearch?logic1=AND&field1=ALL&kw1=a&logic2=OR&field2=title&kw2=b&start=2016-04-04&end=2016-20-04" target="_blank">返回数据示例</a>
+        </p>
+    </div>
+    
+    <div class="api">
+        <h2>getAuthorById</h2>
+        <p>根据id获取作者信息</p>
+        <p>请求方式：GET</p>
+        <dl>
+            <dt>id</dt>
+            <dd>作者id</dd>
+        </dl>
+        <p>
+            <a href="getAuthorById?id=1" target="_blank">返回数据示例</a>
+        </p>
+    </div>
+    
+    <div class="api">
+        <h2>getYearsRange</h2>
+        <p>获取有效的年份信息</p>
+        <p>请求方式：GET</p>
+        <dl>
+            <dt>参数无</dt>
+        </dl>
+        <p>
+            <a href="getYearsRange" target="_blank">返回数据示例</a>
+        </p>
+    </div>
+    
+    <div class="api">
+        <h2>getCollegesMapData</h2>
+        <p>获取学院产出分布图数据</p>
+        <p>请求方式：GET</p>
+        <dl>
+            <dt>collage</dt>
+            <dd>学院id。如果没有或值为空，表示学校</dd>
+            <dt>start</dt>
+            <dd>开始年份。如果没有或值为空，表示不限</dd>
+            <dt>end</dt>
+            <dd>结束年份</dd>
+        </dl>
+        <p>
+            <a href="getCollegesMapData" target="_blank">返回数据示例</a>
+        </p>
+    </div>
+    
+    <div class="api">
+        <h2>getSubjectsMapData</h2>
+        <p>获取学科产出分布图数据</p>
+        <p>请求方式：GET</p>
+        <dl>
+            <dt>subject</dt>
+            <dd>学科id。如果没有或值为空，表示学校</dd>
+            <dt>start</dt>
+            <dd>开始年份。如果没有或值为空，表示不限</dd>
+            <dt>end</dt>
+            <dd>结束年份</dd>
+        </dl>
+        <p>
+            <a href="getSubjectsMapData" target="_blank">返回数据示例</a>
+        </p>
+    </div>
+    
+    <div class="api">
+        <h2>getTypesMapData</h2>
+        <p>获取内容类型分布图数据</p>
+        <p>请求方式：GET</p>
+        <dl>
+            <dt>collage</dt>
+            <dd>学院id。如果没有或值为空，表示学校</dd>
+            <dt>start</dt>
+            <dd>开始年份。如果没有或值为空，表示不限</dd>
+            <dt>end</dt>
+            <dd>结束年份</dd>
+        </dl>
+        <p>
+            <a href="getTypesMapData" target="_blank">返回数据示例</a>
+        </p>
+    </div>
+    
+    <div class="api">
+        <h2>getAuthorCooperateMapData</h2>
+        <p>获取作者合作图谱数据</p>
+        <p>请求方式：GET</p>
+        <dl>
+            <dt>collage</dt>
+            <dd>学院id。如果没有或值为空，表示学校</dd>
+            <dt>start</dt>
+            <dd>开始年份。如果没有或值为空，表示不限</dd>
+            <dt>end</dt>
+            <dd>结束年份</dd>
+        </dl>
+        <p>
+            <a href="getAuthorCooperateMapData" target="_blank">返回数据示例</a>
+        </p>
+    </div>
+    
+    <div class="api">
+        <h2>getSubjectInfoById</h2>
+        <p>根据subject id获取学科信息</p>
+        <p>请求方式：GET</p>
+        <dl>
+            <dt>subject</dt>
+            <dd>学科id</dd>
+        </dl>
+        <p>
+            <a href="getSubjectInfoById?subject=http://frdc.com/discipline/resource/b27227ad3c24f8eb4460e29e2d1a57b3" target="_blank">返回数据示例</a>
+        </p>
+    </div>
+    
+    <div class="api">
+        <h2>getCollegeInfoById</h2>
+        <p>根据collage id获取学院信息</p>
+        <p>请求方式：GET</p>
+        <dl>
+            <dt>collage</dt>
+            <dd>学院id</dd>
+        </dl>
+        <p>
+            <a href="getCollegeInfoById?collage=http://frdc.com/discipline/resource/89dc55730771f4a134991801d6539b2d" target="_blank">返回数据示例</a>
+        </p>
+    </div>
+    
+    <div class="api">
+        <h2>getDataListOfMap</h2>
+        <p>图谱对应的数据列表</p>
+        <p>请求方式：GET</p>
+        <dl>
+            <dt>subject</dt>
+            <dd>学科id。subject和collage不共存，如果subject和collage都无效，则代表学校</dd>
+            <dt>collage</dt>
+            <dd>学院id</dd>
+            <dt>sort</dt>
+            <dd>排序方式。comprehensive表示综合排序（默认），time表示按时间降序</dd>
+            <dt>page</dt>
+            <dd>第几页。默认为1，表示第1页</dd>
+            <dt>pre</dt>
+            <dd>每页多少条。默认为10</dd>
+            <dt>start</dt>
+            <dd>开始年份。如果没有或值为空，表示不限</dd>
+            <dt>end</dt>
+            <dd>结束年份</dd>
+        </dl>
+        <p>
+            <a href="getDataListOfMap" target="_blank">返回数据示例</a>
+        </p>
+    </div>
+    
+    <div class="api">
+        <h2>getYearsMapData</h2>
+        <p>获取时间分布图数据</p>
+        <p>请求方式：GET</p>
+        <dl>
+            <dt>collage</dt>
+            <dd>学院id。如果没有或值为空，表示学校</dd>
+            <dt>subject</dt>
+            <dd>学科id</dd>
+            <dt>start</dt>
+            <dd>开始年份。如果没有或值为空，表示不限</dd>
+            <dt>end</dt>
+            <dd>结束年份</dd>
+        </dl>
+        <p>
+            <a href="getYearsMapData" target="_blank">返回数据示例</a>
+        </p>
+    </div>
+    
+    <div class="api">
+        <h2>getAuthorDataList</h2>
+        <p>获取作者数据列表</p>
+        <p>请求方式：GET</p>
+        <dl>
+            <dt>id</dt>
+            <dd>作者id</dd>
+            <dt>page</dt>
+            <dd>第几页</dd>
+            <dt>sort</dt>
+            <dd>排序方式。comprehensive表示综合排序（默认），time表示按时间降序</dd>
+        </dl>
+        <p>
+            <a href="getAuthorDataList?id=http%3A%2F%2Ffrdc.com%2Fteacher%2Fresource%2F683a01d884afbc6d1b32d6bce126aba1" target="_blank">返回数据示例</a>
+        </p>
+    </div>
+    
+    <div class="api">
+        <h2>getYears</h2>
+        <p>年</p>
+        <p>请求方式：GET</p>
+        <p>
+            <a href="/API/getYears" target="_blank">返回数据示例</a>
+        </p>
+    </div>
+    
+    <!--<div class="api">
+        <h2>xyjgs</h2>
+        <p>函数功能</p>
+        <p>请求方式：GET</p>
+        <dl>
+            <dt>参数1</dt>
+            <dd>参数1的解释</dd>
+            <dt>参数1</dt>
+            <dd>参数1的解释</dd>
+        </dl>
+        <p><a href="#" target="_blank">返回数据示例1</a><a href="#" target="_blank">返回数据示例1</a></p>
+    </div>-->
+    
+    <script src="/js/jquery.min.js"></script>
+    <script>
+        $('.api-number').text('(' + $('.api').length + '个)')
+    </script>
+</body>
+</html>

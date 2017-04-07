@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>中国农业大学机构知识库</title>
+		<link rel="stylesheet" href="/css/cssreset-min.css" />
+		<link rel="stylesheet" href="/css/main.css" />
+		<script type="text/javascript" src="/js/jquery.min.js" ></script>
+		<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+		<script type="text/javascript" src="/js/main.js" ></script>
+        <script type="text/javascript" src="/vue/dist/vue.min.js" ></script>
+		<script type="text/javascript" src="/echarts/dist/echarts.js" ></script>
+        <script type="text/javascript" src="/urijs/src/URI.js" ></script>
+        <script type="text/javascript" src="/js/v-render.js" ></script>
+	</head>
+	<body>
+		<div class="head">
+			<div class="head-logo">
+				<a href="/" class="logo-font-zhong">中国农业大学机构知识库</a><br />
+				<span class="logo-font-en">China Agricultural University Knowledge Base </span>
+			</div>
+			<div class="head-searchbox">
+				<div class="head-searchbox-search">
+					<input id="search-input" type="text" value="" placeholder="请输入检索关键词"/>
+					<input id="search-btn" class="search-icon" type="submit" value=""/>
+				</div>
+				<div class="head-searchbox-gaoji">
+					<a href="/adsearch">高级检索</a>
+				</div>
+			</div>
+		</div>
+    {% include 'includes/nav.html' %}
+		<div class="content cf">
+			<!-- 左边内容 start -->
+            <!--<div id="v-subnav">
+                <div class="content-nav" v-if="ok">
+                    <a href="javascript:history.back(-1);"><img src="/img/content-nav.png" alt="content-nav" /></a>
+                    <span>{{ subnav.name }}</span>
+                </div>
+            </div>-->
+            
+			<div class="content-left">
+				<!-- 学院机构 -->
+				<div class="container-xyjg">
+					<div class="common-title-left">
+						<p>
+							<img src="/img/title-icon.png" alt="title-icon" />
+							<span>学院</span>
+						</p>
+					</div>
+					<ul class="common-title-left-ul" id="v-collages">
+						<li v-for="collage in collages"><a href="?collage={{ collage.id }}">{{ collage.name }}</a></li>
+					</ul>
+				</div>
+				<!--  学科专业 -->
+				<div class="container-xkzy">
+					<div class="common-title-left">
+						<p>
+							<img src="/img/title-icon.png" alt="title-icon" />
+							<span>学科</span>
+						</p>
+					</div>
+					<ul class="common-title-left-ul" id="v-subjects">
+						<li v-for="subject in subjects"><a href="?subject={{ subject.id }}">{{ subject.name }}</a></li>
+                        <li class="more-subjects">
+                            <ul>
+                                <li v-for="subject in subjectsOthers"><a href="?subject={{ subject.id }}">{{ subject.name }}</a></li>
+                            </ul>
+                        </li>
+                        <!--<li v-if="showMore" class="change-subjects-number"><span>展开</span></li>-->
+                        <!--<li v-for="subject in subjectsOthers"><a href="/map?maptype=2&subject={{ subject.id }}">{{ subject.name }}</a></li>-->
+					</ul>
+				</div>
+				<!-- 作者 -->
+				<!--<div class="container-author">
+					<div class="common-title-left">
+                        <img src="/img/title-icon.png" alt="title-icon" />
+                        <span>作者</span>
+                        <a href="#">更多</a>
+					</div>
+					<ul class="common-title-left-ul" id="v-comprehensive-authors">
+						<li v-for="author in authors"><a href="authors?view=data&id={{ author.id }}">{{ author.name }}[{{ author.number }}]</a></li>
+					</ul>
+				</div>-->
+				
+				<!-- 发表时间 -->
+				<div class="container-fbsj">
+					<div class="common-title-left">
+                        <img src="/img/title-icon.png" alt="title-icon" />
+                        <span>发表时间</span>
+					</div>
+					<ul class="common-title-left-ul v-mapQuery" id="v-map-year">
+						<li v-for="y in years"><a href="{{ url }}" val={{y.year}}>{{y.year}}<span>({{ y.number }})</span></a></li>
+					</ul>
+				</div>
+				
+				<!-- 内容类型 -->
+				<div class="container-nrlx">
+					<div class="common-title-left">
+						<p>
+							<img src="/img/title-icon.png" alt="title-icon" />
+							<span>内容类型</span>
+						</p>
+					</div>
+					<ul class="common-title-left-ul" id="v-types">
+						<li v-for="type in types"><a href="map?view=data&type={{ type.id }}">{{ type.name }}<span>({{ type.number }})</span></a></li>
+					</ul>
+				</div>
+                
+                <!-- 站点统计 -->
+				<div class="container-zdtj">
+					<div class="common-title-right">
+						<p>
+							<img src="/img/title-icon.png" alt="title-icon" />
+							<span>站点统计</span>
+						</p>
+					</div>
+					<ul class="common-title-right-ul zdtj" id="v-site-stats">
+						<li><span>条目数量:{{ siteStats.itemNumber }}</span></li>
+						<li><span>全文数量:{{ siteStats.fullTextNumber }}</span></li>
+						<li><span>浏览总量:{{ siteStats.PV }}</span></li>
+						<li><span>下载总量:{{ siteStats.downloadNumber }}</span></li>
+					</ul>
+					<div class="zdtj-img">
+						<a href="#"><img src="/img/tongji-rss.png" alt="tongji-rss"/></a>
+						<a href="#"><img src="/img/tongji-rss-atom.png" alt="tongji-rss-atom" /></a>
+					</div>
+				</div>
+			</div>
+			<!-- 左边内容 end -->
+				
+			<!-- 中间内容 start -->
+			<div class="content-center">
+                <!-- 学术快讯 -->
+                <div class="container-xskx" id="v-subnav">
+                    <div class="common-title-center common-title-intro">
+                        <p>
+                            <img src="/img/title-icon.png" alt="title-icon" />
+                            <span><a href="/">中国农业大学</a> -- {{ subnav.name }}</span>
+                        </p>
+                    </div>
+                    <div v-if="hasIntro" class="common-intro-content">{{ subnav.intro }} <span v-on:click="showMoreIntro">{{status}}</span></div>
+                </div>
+                
+                
+				<!-- 学术快讯 -->
+				<div class="container-xskx">
+					<div class="common-title-center">
+						<p>
+							<img src="/img/title-icon.png" alt="title-icon" />
+							<span id="v-subnav-x">学术快讯</span>
+							<a href="#">更多</a>
+						</p>
+					</div>
+					<ul class="common-title-center-ul" id="v-academic-news">
+						<li v-for="academicNew in academicNews"><a href="/news?id={{ academicNew.id }}">{{ academicNew.title }}/{{ academicNew.date }}</a></li>
+					</ul>
+				</div>
+				
+				<!-- 获奖成果 -->
+				<div class="container-hjcg">
+					<div class="common-title-center" >
+						<p>
+							<img src="/img/title-icon.png" alt="title-icon" />
+							<span id="v-subnav-h">获奖成果</span>
+							<a href="#">更多</a>
+						</p>
+					</div>
+					<ul class="common-title-center-ul" id="v-achievements">
+						<li v-for="achievement in achievements"><a href="/achievements?id={{ achievement.id }}">{{ achievement.title }}/{{ achievement.date }}</a></li>
+					</ul>
+				</div>
+				
+				<!-- 教师发文量top20 -->
+				<div class="container-jsfwl">
+					<div class="common-title-center">
+						<p>
+							<img src="/img/title-icon.png" alt="title-icon" />
+							<span>教师发文量TOP20</span>
+							<a href="{{ url }}" id="v-moreAuthors">更多</a>
+						</p>
+					</div>
+					<ul class="common-title-center-ul teacher-publish" id="v-number-authors">
+						<li v-for="author in authors"><a href="/authors?id={{ author.id }}">{{ $index + 1 }} {{ author.name }}<span style="color: #45a8a8;">({{author.number}})</span></a></li>
+					</ul>
+				</div>
+				<!-- 引用论文TOP20 -->
+				<div class="container-yylw">
+					<div class="common-title-center">
+						<p>
+							<img src="/img/title-icon.png" alt="title-icon" />
+							<span>引用论文TOP20</span>
+							<a href="#">更多</a>
+						</p>
+					</div>
+					<ul class="common-title-center-ul" id="v-articlesByReference">
+						<li v-for="article in articles"><a href="/articles?id={{ article.id }}&type=SCI_Journal">{{ article.title }}</a><span>[引用量{{ article.baiduCitation }}]</span></li>
+					</ul>
+				</div>
+                
+                <!-- 下载排行 -->
+				<div class="container-donwload">
+					<div class="common-title-right">
+						<p>
+							<img src="/img/title-icon.png" alt="title-icon" />
+							<span>下载排行</span>
+						</p>
+					</div>
+					<ul class="common-title-right-ul-time">
+						<li class="common-title-right-ul-time-li common-active" dis-only="all">总排行</li>
+						<li class="common-title-right-ul-time-li" dis-only="month">月排行</a></li>
+						<li class="common-title-right-ul-time-li" dis-only="week">周排行</li>
+					</ul>
+					<ul class="common-title-right-ul download v-articlesByDownload" id="all">
+						<li v-for="article in articles"><a href="/articles?id={{ article.id }}">{{ $index + 1 }}、{{ article.title }}</a><span>[{{ article.downloadNumber }}]</span></li>
+					</ul>
+					<ul class="common-title-right-ul download v-articlesByDownloadMonth" id="month">
+						<li v-for="article in articles"><a href="/articles?id={{ article.id }}">{{ $index + 1 }}、{{ article.title }}</a><span>[{{ article.downloadNumber }}]</span></li>
+					</ul>
+					<ul class="common-title-right-ul download v-articlesByDownloadWeek" id="week">
+						<li v-for="article in articles"><a href="/articles?id={{ article.id }}">{{ $index + 1 }}、{{ article.title }}</a><span>[{{ article.downloadNumber }}]</span></li>
+					</ul>
+				</div>
+			</div>
+			<!-- 中间内容  end -->
+			
+			<!-- 右边内容  start -->
+			<div class="content-right">
+				<!-- 学院产出分布 -->
+                <div id="v-map-preview-college">
+                    <div class="container-xkccfb" v-if="!isCollegePage">
+                        <div class="common-title-right">
+                            <p>
+                                <img src="/img/title-icon.png" alt="title-icon" />
+                                <span>学院产出分布</span>
+                            </p>
+                        </div>
+                        <div class="common-title-right-img v-mapQuery">
+                            <a href="{{ url }}">
+                                <!--<img src="/img/xkccfb.png" alt="xkccfb"/>-->
+								<div id="xkccfb-t"></div>
+								<img src="/img/xyccT1.jpg" alt="xyccT"/>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                    
+				
+				<!-- 学科产出分布 -->
+                <div id="v-map-preview-subject">
+                    <div class="container-xkzyccfb" v-if="!isSubjectPage">
+                        <div class="common-title-right">
+                            <p>
+                                <img src="/img/title-icon.png" alt="title-icon" />
+                                <span>学科产出分布</span>
+                            </p>
+                        </div>
+                        <div class="common-title-right-img v-mapQuery">
+                            <a href="{{ url }}">
+                                <!--<img src="/img/xkzyccfb.png" alt="xkccfb"/>-->
+								<div id="xkzyccfb-t"></div>
+								<img src="/img/xkccT1.jpg" alt="xkccT"/>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                    
+				<!-- 作者合作图谱 -->
+				<div class="container-xkcgfb">
+					<div class="common-title-right">
+						<p>
+							<img src="/img/title-icon.png" alt="title-icon" />
+							<span>作者合作图谱</span>
+						</p>
+					</div>
+					<div class="common-title-right-img xkcgfb v-mapQuery" id="v-map-preview-author">
+						<a href="{{ url }}">
+							<img src="/img/xkcglxfb.png" alt="xkccfb"/>
+						</a>
+					</div>
+				</div>
+				
+				<!-- 内容类型分布 -->
+				<div class="container-jsccfb">
+					<div class="common-title-right">
+						<p>
+							<img src="/img/title-icon.png" alt="title-icon" />
+							<span>内容类型分布</span>
+						</p>
+					</div>
+					<div class="common-title-right-img jsccfb v-mapQuery" id="v-map-preview-type">
+						<a href="{{ url }}">
+							<!--<img src="/img/jsccfb.png" alt="jsccfb"/>-->
+							<div id="jsccfb-t"></div>
+							<img src="/img/sjxlT1.jpg" alt="sjxlT"/>
+						</a>
+					</div>
+				</div>
+                
+                <!-- 时间分布 
+				<div class="container-jsccfb">
+					<div class="common-title-right">
+						<p>
+							<img src="/img/title-icon.png" alt="title-icon" />
+							<span>时间分布</span>
+						</p>
+					</div>
+					<div class="common-title-right-img jsccfb v-mapQuery" id="v-map-preview-time">
+						<a href="{{ url }}">
+							<img src="/img/timemap_pre.png" alt="jsccfb"/>
+						</a>
+					</div>
+				</div> -->
+				
+			</div>
+			<!-- 右边内容  end -->
+		</div>
+		<div class="foot">
+			<div class="foot-content cf">
+				<img class="foot-logo" src="/img/small_logo.png">
+				<div class="foot-name">
+					<p class="foot-zh-name">中国农业大学机构知识库</p>
+					<p class="foot-en-name"><img src="/img/small_letter.png"></p>
+				</div>
+			</div>
+		</div>
+        <!--[if lt IE 9]>
+			<script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+			<script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+		<![endif]-->
+	</body>
+</html>

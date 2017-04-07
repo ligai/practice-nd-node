@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>中国农业大学机构知识库</title>
+		<link rel="stylesheet" href="/css/cssreset-min.css" />
+		<link rel="stylesheet" href="/css/main.css" />
+		<script type="text/javascript" src="/js/jquery.min.js" ></script>
+		<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+		<script type="text/javascript" src="/js/main.js" ></script>
+        <script type="text/javascript" src="/vue/dist/vue.min.js" ></script>
+        <script type="text/javascript" src="/urijs/src/URI.js" ></script>
+        <script type="text/javascript" src="/js/v-render.js" ></script>
+	</head>
+	<body>
+		<div class="head">
+			<div class="head-logo">
+				<a href="/" class="logo-font-zhong">中国农业大学机构知识库</a><br />
+				<span class="logo-font-en">China Agricultural University Knowledge Base </span>
+			</div>
+			<div class="head-searchbox">
+				<div class="head-searchbox-search">
+					<input id="search-input" type="text" value="" placeholder="请输入检索关键词"/>
+					<input id="search-btn" class="search-icon" type="submit" value=""/>
+				</div>
+				<div class="head-searchbox-gaoji">
+					<a href="/adsearch">高级检索</a>
+				</div>
+			</div>
+		</div>
+		{% include 'includes/nav.html' %}
+		<div class="content cf" id="v-articleById" v-if="isType">
+			<!-- 左边内容 start -->
+			<div class="content-nav">
+				<a href="javascript:history.back(-1);"><img src="img/content-nav.png" alt="content-nav" /></a>
+				<span id="article-title" style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden; width: 920px; display: inline-block;" ></span>
+			</div>
+			<div class="detail-content">
+				<!-- <table class="detail-table-two">
+					<tr>
+						<td class="detail-t-f">题名</td>
+						<td>{{ article.title }}</td>
+					</tr>
+					<tr>
+						<td class="detail-t-f">关键词</td>
+						<td>{{ article.keywords }}</td>
+					</tr>
+					<tr>
+						<td class="detail-t-f">期刊名称</td>
+						<td>{{ article.journal }}</td>
+					</tr>
+					<tr>
+						<td class="detail-t-f">出版年</td>
+						<td>{{ article.year }}</td>
+					</tr>
+					<tr>
+						<td class="detail-t-f">出版日</td>
+						<td>{{ article.date }}</td>
+					</tr>
+					<tr>
+						<td class="detail-t-f">卷起编号</td>
+						<td>{{ article.volume }}</td>
+					</tr>
+					<tr>
+						<td class="detail-t-f">所在页码</td>
+						<td>{{ article.startPage }}-{{ article.endPage }}</td>
+					</tr>
+					<tr>
+						<td class="detail-t-f">会议标题</td>
+						<td>{{ article.conferenceTitle }}</td>
+					</tr>
+					<tr>
+						<td class="detail-t-f">会议日期</td>
+						<td>{{ article.conferenceDate }}</td>
+					</tr>
+					<tr>
+						<td class="detail-t-f">会议地点</td>
+						<td>{{ article.conferenceAddress }}</td>
+					</tr>
+					<tr>
+						<td class="detail-t-f">通讯作者</td>
+						<td>{{ article.correspondingAuthor }}</td>
+					</tr>
+					<tr>
+						<td class="detail-t-f">全文文件</td>
+						<td>{{ article.downloadURL }}</td>
+					</tr>
+					<tr>
+						<td class="detail-t-f">作者</td>
+						<td>{{ article.authors }}</td>
+					</tr>
+                    <tr>
+						<td class="detail-t-f">英文摘要</td>
+						<td>{{ article.en_abstract }}</td>
+					</tr>
+                    <tr>
+						<td class="detail-t-f">中文摘要</td>
+						<td>{{ article.zh_abstract }}</td>
+					</tr>
+					<tr>
+						<td class="detail-t-f">百度引用量</td>
+						<td>{{ article.baiduCitation }}</td>
+					</tr>
+				</table> -->
+			</div>
+				
+			<!-- 右边内容  end -->
+		</div>
+		<div class="foot">
+			<div class="foot-content cf">
+				<img class="foot-logo" src="/img/small_logo.png">
+				<div class="foot-name">
+					<p class="foot-zh-name">中国农业大学机构知识库</p>
+					<p class="foot-en-name"><img src="/img/small_letter.png"></p>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

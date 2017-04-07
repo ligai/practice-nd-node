@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>中国农业大学机构知识库</title>
+		<link rel="stylesheet" href="/css/cssreset-min.css" />
+		<link rel="stylesheet" href="/css/main.css" />
+		<script type="text/javascript" src="/js/jquery.min.js" ></script>
+        <script type="text/javascript" src="/js/jquery.cookie.js"></script>
+		<script type="text/javascript" src="/js/main.js" ></script>
+        <script type="text/javascript" src="/vue/dist/vue.min.js" ></script>
+        <script type="text/javascript" src="/urijs/src/URI.js" ></script>
+        <script type="text/javascript" src="/echarts/dist/echarts.js" ></script>
+        <script type="text/javascript" src="/d3/d3.min.js" ></script>
+        <script type="text/javascript" src="/js/d3-timeline.js" ></script>
+        <script type="text/javascript" src="/js/v-render.js" ></script>
+	</head>
+	<body>
+		<div class="head">
+			<div class="head-logo">
+				<a href="/" class="logo-font-zhong">中国农业大学机构知识库</a><br />
+				<span class="logo-font-en">China Agricultural University Knowledge Base </span>
+			</div>
+			<div class="head-searchbox">
+				<div class="head-searchbox-search">
+					<input id="search-input" type="text" value="" placeholder="请输入检索关键词"/>
+					<input id="search-btn" class="search-icon" type="submit" value=""/>
+				</div>
+				<div class="head-searchbox-gaoji">
+					<a href="/adsearch">高级检索</a>
+				</div>
+			</div>
+		</div>
+		{% include 'includes/nav.html' %}
+		<!--  内容部分  start -->
+		<div class="content cf">
+            <!-- 左边内容 start -->
+			<div class="content-left">
+				<!-- 学院机构 -->
+				<div class="container-xyjg">
+					<div class="common-title-left">
+						<p>
+							<img src="/img/title-icon.png" alt="title-icon" />
+							<span>学院</span>
+						</p>
+					</div>
+					<ul class="common-title-left-ul" id="v-collages">
+						<li v-for="collage in collages"><a href="/?collage={{ collage.id }}">{{ collage.name }}</a></li>
+					</ul>
+				</div>
+				<!--  学科专业 -->
+				<div class="container-xkzy">
+					<div class="common-title-left">
+						<p>
+							<img src="/img/title-icon.png" alt="title-icon" />
+							<span>学科</span>
+						</p>
+					</div>
+					<ul class="common-title-left-ul" id="v-subjects">
+						<li v-for="subject in subjects"><a href="/?subject={{ subject.id }}">{{ subject.name }}</a></li>
+					</ul>
+				</div>
+				<!-- 作者 -->
+				<!--<div class="container-author">
+					<div class="common-title-left">
+                        <img src="/img/title-icon.png" alt="title-icon" />
+                        <span>作者</span>
+                        <a href="#">更多</a>
+					</div>
+					<ul class="common-title-left-ul" id="v-comprehensive-authors">
+						<li v-for="author in authors"><a href="authors?view=data&id={{ author.id }}">{{ author.name }}[{{ author.number }}]</a></li>
+					</ul>
+				</div>-->
+				
+				<!-- 发表时间 -->
+				<div class="container-fbsj">
+					<div class="common-title-left">
+                        <img src="/img/title-icon.png" alt="title-icon" />
+                        <span>发表时间</span>
+					</div>
+					<ul class="common-title-left-ul v-mapQuery" id="v-map-year">
+						<li v-for="y in years"><a href="{{ url }}" val={{y.year}}>{{y.year}}<span>({{ y.number }})</span></a></li>
+					</ul>
+				</div>
+				
+				<!-- 内容类型 -->
+				<div class="container-nrlx">
+					<div class="common-title-left">
+						<p>
+							<img src="/img/title-icon.png" alt="title-icon" />
+							<span>内容类型</span>
+						</p>
+					</div>
+					<ul class="common-title-left-ul" id="v-types">
+						<li v-for="type in types"><a href="map?view=data&type={{ type.id }}">{{ type.name }}<span>({{ type.number }})</span></a></li>
+					</ul>
+				</div>
+			</div>
+			<!-- 左边内容 end -->
+            
+            <div class="knowledge-right">
+                <div class="person-detail-top">
+                    <div class="person-introduce cf" id="v-author">
+                        <div style="float: left;">
+                            <!--/img/touxiang_default.jpg-->
+                            <img width="123" src="{{icon.includes('.jpg') ? icon : '/img/touxiang_default.jpg'}}" alt="{{ name }}" />
+                            <div class="person-name">
+                                <span class="person-h1">{{ name }}</span><br />
+                                <span class="person-h2">机构：</span>{{ college }}<br />
+                                <span class="person-h2">学科：</span>{{ firstLevelSubject }}<br />
+                                <span class="person-h2">主页：</span><a style="color: blue;" href="{{ homepage }}">主页</a><br />
+                                <span class="person-h2">反馈：</span><a href="{{ url }}" id="feedback">用户反馈</a><br/>
+                                <!--<span class="person-h3">二级学科：{{ secondLevelSubject }}</span>-->
+                                <!-- JiaThis Button BEGIN -->
+								<div class="jiathis_style">
+									<a class="jiathis_button_qzone"></a>
+									<a class="jiathis_button_tsina"></a>
+									<a class="jiathis_button_tqq"></a>
+									<a class="jiathis_button_weixin"></a>
+									<a class="jiathis_button_renren"></a>
+									<a href="http://www.jiathis.com/share?uid=2104845" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+									<a class="jiathis_counter_style"></a>
+								</div>
+								<script type="text/javascript">
+								var jiathis_config = {data_track_clickback:'true'};
+								</script>
+								<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=2104845" charset="utf-8"></script>
+								<!-- JiaThis Button END -->
+                            </div>
+                        </div>
+                        <div style="float: right; width: 390px;">
+                            <ul class="person-title-ul">
+                                <li class="person-title-ul-li person-active" dis-only="work">工作简历</li>
+                                <!--<li class="person-title-ul-li" dis-only="study">学习简历</li>-->
+                                <!--<li class="person-title-ul-li" dis-only="course">讲授课程</li>-->
+                            </ul>
+                            <div class="person-title-display" id="work">
+                                <!--<li v-for="experience in workExperience">{{ experience }}</li>-->
+                                <p style="line-height: 2em;max-height: 200px;overflow: auto;">{{ workExperience }}</p>
+                            </div>
+                            <!--<ul class="person-title-display" id="study">
+                                <li v-for="experience in studyExperience">{{ experience }}</li>
+                            </ul>-->
+                            <!--<ul class="person-title-display" id="course">
+                                <li v-for="experience in courseExperience">{{ experience }}</li>
+                            </ul>-->
+                        </div>
+                    </div>
+                    
+                    <div class="cf">
+                        <button class="mp-change-view">切换到数据列表</button>
+                    </div>
+                </div>
+                
+                <div class="author-maps" id="v-author-map">
+                    <div class="person-keyword">
+                        <div class="common-title-person">
+                            <span class="person-h2">关键词云图：</span>
+                        </div>
+                        <div id="w-yuntu" width="410"></div>
+                    </div>
+                    
+                    <div class="person-detail-center">
+                        <div class="common-title-person">
+                            <span class="person-h2">科研类型分布图：</span>
+                        </div>
+                        <div class="person-kylx" id="">
+                            <!--<img src="img/person-kylxfb-v1.png" />
+                            <img src="img/person-kylxfb-v2.png" />-->
+                            <div id="author-type-pie" style="width:400px; height:290px; margin-top:20px;"></div>
+                            <div id="author-type-bar" style="width:500px; height:290px;margin-top:20px;margin-bottom:20px;"></div>
+                        </div>
+                    </div>
+                    <div class="person-detail-foot">
+                        <div class="common-title-person">
+                            <span class="person-h2">相关学科时序图：</span>
+                        </div>
+                        <div class="person-yjztsxt" id="topic-chart">
+                        </div>
+                    </div>
+                    <div class="person-detail-foot">
+                        <div class="common-title-person">
+                            <span class="person-h2">关键词时序图：</span>
+                        </div>
+                        <div id="keywords-chart" style="width: 775px; height: 400px;"></div>
+                    </div>
+                </div>
+                
+                <div class="search-result-display map-data-list" id="v-authorData" style="display: none; font-size: 14px;">
+                    <div class="author-condition-add" >
+						<p>
+							<label for="发表学院">内容类型</label>
+							<select class="knowledge-select-x2 author-types">
+							</select>
+						</p>
+					</div>
+					<div class="search-result-item">
+                        <span style="color:#999;float: left; margin-top: 10px; padding-left: 20px;">共找到相关结果{{ result.total }}个</span>
+                        <!--<input class="search-result-button" id="checkAll" type="button" onclick="checkedAll('ids')" value="全选" />
+                        <input class="search-result-button" type="button" value="保存所选内容" />-->
+                        <label for="">排序方式</label>
+                        <select class="search-result-select result-page search-sort">
+                            <option value="comprehensive">默认排序</option>
+                            <option value="time">按时间降序</option>
+                        </select>
+                    </div>
+
+					
+                    <div class="search-result-list" v-if="isType">
+                        <table class="search-result-list-table" v-for="item in result.list">
+                            <tr>
+                                <!--<td rowspan="4" style="width: 30px;"><input type="checkbox" name="ids" /></td>-->
+                                <td><a href="/articles?id={{ item.id }}&type={{ item.typeId }}" class="list-font-one">{{ item.title }}</a>[{{ item.type }}]</td>
+                            </tr>
+                            <tr>
+                                <td>{{ item.journal }}, {{item.year}}, 卷号:{{item.volume}}, 页码:{{item.startPage}}-{{item.endPage}}, 百度引用量:{{ item.baiduCitation }}</td>
+                            </tr>
+                            <tr>
+                                <td><a v-for="a in item.author" href="/authors?view=data&id={{a.id}}" style="margin-right: 5px;color: #45A8A8;" target="_blank">{{a.name}}</a></td>
+                            </tr>
+                            <tr>
+                                <td><a class="list-font-two" href="/articles?id={{ item.id }}&type={{ item.typeId }}">浏览</a> &nbsp;&nbsp;<span v-if="item.downloadURL">|&nbsp;&nbsp;<a class="list-font-two" href="{{ item.downloadURL }}">Adobe PDF</a></span></td>
+                            </tr>
+                        </table>
+                    </div>
+
+					<div class="search-result-list"  v-else>
+                        <table class="search-result-list-table" v-for="item in result.list">
+                            <tr>
+                                <!--<td rowspan="4" style="width: 30px;"><input type="checkbox" name="ids" /></td>-->
+                                <td><a href="/articles?id={{ item.id }}&type={{ item.typeId }}" class="list-font-one">{{ item.title }}</a>[{{ item.type }}]</td>
+                            </tr>
+                            <tr>
+                                <td>{{item.year}}</td>
+                            </tr>
+                            <tr>
+                                <td><a v-for="a in item.author" href="/authors?view=data&id={{a.id}}" style="margin-right: 5px;color: #45A8A8;" target="_blank">{{a.name}}</a></td>
+                            </tr>
+                            <tr>
+                                <td><a class="list-font-two" href="/articles?id={{ item.id }}&type={{ item.typeId }}">浏览</a> &nbsp;&nbsp;<span v-if="item.downloadURL">|&nbsp;&nbsp;<a class="list-font-two" href="{{ item.downloadURL }}">Adobe PDF</a></span></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <ul class="search-result-page"></ul>
+                </div>
+                
+            </div>
+		</div>
+		<!--  内容部分  end -->
+		
+		<!--  底部   start -->
+		<div class="foot">
+			<div class="foot-content cf">
+				<img class="foot-logo" src="/img/small_logo.png">
+				<div class="foot-name">
+					<p class="foot-zh-name">中国农业大学机构知识库</p>
+					<p class="foot-en-name"><img src="/img/small_letter.png"></p>
+				</div>
+			</div>
+		</div>
+		<!--  底部   end -->
+	</body>
+</html>

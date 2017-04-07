@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>中国农业大学机构知识库</title>
+		<link rel="stylesheet" href="/css/cssreset-min.css" />
+		<link rel="stylesheet" href="/css/main.css" />
+		<script type="text/javascript" src="/js/jquery.min.js" ></script>
+		<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+		<script type="text/javascript" src="/js/main.js" ></script>
+        <script type="text/javascript" src="/vue/dist/vue.min.js" ></script>
+        <script type="text/javascript" src="/urijs/src/URI.js" ></script>
+        <script type="text/javascript" src="/echarts/dist/echarts.js" ></script>
+        <script type="text/javascript" src="/d3/d3.min.js" ></script>
+        <script type="text/javascript" src="/js/v-render.js" ></script>
+        <style>
+            .node {
+                stroke: #fff;
+                stroke-width: 1.5px;
+            }
+            
+            .link {
+                stroke: #999;
+                stroke-opacity: .6;
+            }
+        </style>
+	</head>
+	<body>
+		<div class="head">
+			<div class="head-logo">
+				<a href="/" class="logo-font-zhong">中国农业大学机构知识库</a><br />
+				<span class="logo-font-en">China Agricultural University Knowledge Base </span>
+			</div>
+			<div class="head-searchbox">
+				<div class="head-searchbox-search">
+					<input id="search-input" type="text" value="" placeholder="请输入检索关键词"/>
+					<input id="search-btn" class="search-icon" type="submit" value=""/>
+				</div>
+				<div class="head-searchbox-gaoji">
+					<a href="/adsearch">高级检索</a>
+				</div>
+			</div>
+		</div>
+		{% include 'includes/nav.html' %}
+		<div class="content cf">
+			<!-- 左边内容 start -->
+			<div class="content-left">
+				<!-- 学院机构 -->
+				<div class="container-xyjg">
+					<div class="common-title-left">
+						<p>
+							<img src="/img/title-icon.png" alt="title-icon" />
+							<span>学院</span>
+						</p>
+					</div>
+					<ul class="common-title-left-ul" id="v-collages">
+						<li v-for="collage in collages"><a href="/?collage={{ collage.id }}">{{ collage.name }}</a></li>
+					</ul>
+				</div>
+				<!--  学科专业 -->
+				<div class="container-xkzy">
+					<div class="common-title-left">
+						<p>
+							<img src="/img/title-icon.png" alt="title-icon" />
+							<span>学科</span>
+						</p>
+					</div>
+					<ul class="common-title-left-ul" id="v-subjects">
+						<li v-for="subject in subjects"><a href="/?subject={{ subject.id }}">{{ subject.name }}</a></li>
+                        <li class="more-subjects">
+                            <ul>
+                                <li v-for="subject in subjectsOthers"><a href="/?subject={{ subject.id }}">{{ subject.name }}</a></li>
+                            </ul>
+                        </li>
+                        <!--<li v-if="showMore" class="change-subjects-number"><span>展开</span></li>-->
+                        <!--<li v-for="subject in subjectsOthers"><a href="/map?maptype=2&subject={{ subject.id }}">{{ subject.name }}</a></li>-->
+					</ul>
+				</div>
+				<!-- 作者 -->
+				<!--<div class="container-author">
+					<div class="common-title-left">
+                        <img src="/img/title-icon.png" alt="title-icon" />
+                        <span>作者</span>
+                        <a href="#">更多</a>
+					</div>
+					<ul class="common-title-left-ul" id="v-comprehensive-authors">
+						<li v-for="author in authors"><a href="authors?view=data&id={{ author.id }}">{{ author.name }}[{{ author.number }}]</a></li>
+					</ul>
+				</div>-->
+				
+				<!-- 发表时间 -->
+				<div class="container-fbsj">
+					<div class="common-title-left">
+                        <img src="/img/title-icon.png" alt="title-icon" />
+                        <span>发表时间</span>
+					</div>
+					<ul class="common-title-left-ul v-mapQuery" id="v-map-year">
+						<li v-for="y in years"><a href="{{ url }}" val={{y.year}}>{{y.year}}<span>({{ y.number }})</span></a></li>
+					</ul>
+				</div>
+				
+				<!-- 内容类型 -->
+				<div class="container-nrlx">
+					<div class="common-title-left">
+						<p>
+							<img src="/img/title-icon.png" alt="title-icon" />
+							<span>内容类型</span>
+						</p>
+					</div>
+					<ul class="common-title-left-ul" id="v-types">
+						<li v-for="type in types"><a href="map?view=data&type={{ type.id }}">{{ type.name }}<span>({{ type.number }})</span></a></li>
+					</ul>
+				</div>
+			</div>
+			<!-- 左边内容 end -->
+			<!-- 知识作品 start -->
+			<div class="knowledge-right">
+				<div class="knowledge-top">
+                    <!-- 简介 -->
+                    <div class="intro2 cf" id="authorList-Letters"></div>
+					
+                    <div class="search-result-display map-data-list" id="v-authorListData" style="display: none;">
+                        <div class="search-result-item">
+                        <span style="color:#999;float: left; margin-top: 10px; padding-left: 20px;">共找到相关结果{{ result.total }}个</span>
+						<!--<input class="search-result-button" id="checkAll" type="button" onclick="checkedAll('ids')" value="全选" />
+						<input class="search-result-button" type="button" value="保存所选内容" />-->
+						
+					</div>
+					<div class="search-result-list">
+						<table class="search-result-list-table" v-for="item in result.authors">
+							<tr>
+								<!--<td rowspan="4" style="width: 30px;"><input type="checkbox" name="ids" /></td>-->
+								<td><a href="/authors?id={{ item.id }}" class="list-font-one">{{ item.name }}({{ item.count }})</a></td>
+							</tr>
+							<tr>
+								<td>{{ item.college }}</td>
+							</tr>
+						</table>
+					</div>
+					<ul class="search-result-page"></ul>
+                    </div>
+				</div>
+			</div>
+			<!-- 知识作品 end -->
+		</div>
+		
+		<div class="foot">
+			<div class="foot-content cf">
+				<img class="foot-logo" src="/img/small_logo.png">
+				<div class="foot-name">
+					<p class="foot-zh-name">中国农业大学机构知识库</p>
+					<p class="foot-en-name"><img src="/img/small_letter.png"></p>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

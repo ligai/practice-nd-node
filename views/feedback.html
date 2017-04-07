@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>用户反馈</title>
+		<link rel="stylesheet" href="css/cssreset-min.css" />
+		<link rel="stylesheet" href="css/main.css" />
+		<script type="text/javascript" src="/js/jquery.min.js" ></script>
+		<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+		<script type="text/javascript" src="/vue/dist/vue.min.js" ></script>
+        <script type="text/javascript" src="/urijs/src/URI.js" ></script>
+		<script type="text/javascript" src="/js/v-render.js" ></script>
+	</head>
+	<body>
+		<div class="head">
+			<div class="head-logo">
+				<a href="/" class="logo-font-zhong">中国农业大学机构知识库</a><br />
+				<span class="logo-font-en">China Agricultural University Knowledge Base </span>
+			</div>
+			<div class="head-searchbox">
+				<div class="head-searchbox-search">
+					<input id="search-input" type="text" value="" placeholder="请输入检索关键词"/>
+					<input id="search-btn" class="search-icon" type="submit" value=""/>
+				</div>
+				<div class="head-searchbox-gaoji">
+					<a href="/adsearch">高级检索</a>
+				</div>
+			</div>
+		</div>
+		{% include 'includes/nav.html' %}
+		<div class="content cf">
+			<div class="common-title-search">
+				<p>
+					<img src="img/title-icon.png" alt="title-icon" />
+					<span>用户反馈</span>
+				</p>
+			</div>
+			<div class="feedback-item">
+				<form action="/sendFeedback" method="post" id="feedback-form">
+					<div class="user-feedback">
+						<table style="width:100%">
+							<tr>
+								<td class="feed-tab-right">邮箱：</td>
+								<td>
+									<input class="feed-input" type="email" name="email" value="173.116@cn.fujitsu.com" readonly />
+								</td>
+							</tr>
+							<tr>
+								<td class="feed-tab-right"> 文章标题： </td>
+								<td>
+									<input class="feed-input" type="text" id="feedback-title" name="title" placeholder="文章标题"/>
+								</td>
+							</tr>
+							<tr>
+								<td class="feed-tab-right"> 内容类型： </td>
+								<td>
+									<select class="feed-input" name="type" id="feed-types">
+										<option v-for="type in types" value="{{ type.id }}">{{ type.name }}</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td class="feed-tab-right"> 文章操作： </td>
+								<td>
+									<input type="radio" value="delete" checked name="operation"/>删除&nbsp;&nbsp;
+									<input type="radio" value="add" name="operation"/>添加
+								</td>
+							</tr>
+							<tr>
+								<td class="feed-tab-right"> 用户说明： </td>
+								<td>
+									<textarea name="remark" style="width: 350px; border-radius: 5px;border-color: #d6cece; color: #6d6d6d;"></textarea>
+								</td>
+							</tr>
+						</table>
+
+					</div>
+					<div class="search-button">
+						<input type="button"  id="feedback-btn"  value="反馈"/>
+						<input type="reset" value="清除" />
+					</div>
+				</form>
+			</div>
+		</div>
+		
+		<!--  底部   start -->
+		<div class="foot">
+			<div class="foot-content cf">
+				<img class="foot-logo" src="/img/small_logo.png">
+				<div class="foot-name">
+					<p class="foot-zh-name">中国农业大学机构知识库</p>
+					<p class="foot-en-name"><img src="/img/small_letter.png"></p>
+				</div>
+			</div>
+		</div>
+		<!--  底部   end -->
+	</body>
+</html>

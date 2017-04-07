@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>中国农业大学机构知识库</title>
+		<link rel="stylesheet" href="/css/cssreset-min.css" />
+		<link rel="stylesheet" href="/css/main.css" />
+		<script type="text/javascript" src="/js/jquery.min.js" ></script>
+		<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+		<script type="text/javascript" src="/js/main.js" ></script>
+        <script type="text/javascript" src="/vue/dist/vue.min.js" ></script>
+        <script type="text/javascript" src="/urijs/src/URI.js" ></script>
+        <script type="text/javascript" src="/js/v-render.js" ></script>
+	</head>
+	<body>
+		<div class="head">
+			<div class="head-logo">
+				<a href="/" class="logo-font-zhong">中国农业大学机构知识库</a><br />
+				<span class="logo-font-en">China Agricultural University Knowledge Base </span>
+			</div>
+			<div class="head-searchbox">
+				<div class="head-searchbox-search">
+					<input id="search-input" type="text" value="" placeholder="请输入检索关键词"/>
+					<input id="search-btn" class="search-icon" type="submit" value=""/>
+				</div>
+				<div class="head-searchbox-gaoji">
+					<a href="/adsearch">高级检索</a>
+				</div>
+			</div>
+		</div>
+		{% include 'includes/nav.html' %}
+		<div class="content cf">
+			<!-- 左边内容 start -->
+			<div class="content-left">
+				<!-- 学院机构 -->
+				<div class="container-xyjg">
+					<div class="common-title-left">
+						<p>
+							<img src="img/title-icon.png" alt="title-icon" />
+							<span>机构学院</span>
+						</p>
+					</div>
+					<ul class="common-title-left-ul" id="v-collages">
+						<li v-for="collage in collages"><a href="/?collage={{ collage.id }}">{{ collage.name }}</a></li>
+					</ul>
+				</div>
+				<!--  学科专业 -->
+				<div class="container-xkzy">
+					<div class="common-title-left">
+						<p>
+							<img src="img/title-icon.png" alt="title-icon" />
+							<span>学科专业</span>
+						</p>
+					</div>
+					<ul class="common-title-left-ul" id="v-subjects">
+						<li v-for="subject in subjects"><a href="/?subject={{ subject.id }}">{{ subject.name }}</a></li>
+					</ul>
+				</div>
+				<!-- 作者 -->
+				<!--<div class="container-author">
+					<div class="common-title-left">
+						<p>
+							<img src="img/title-icon.png" alt="title-icon" />
+							<span>作者</span>
+							<a href="#">更多</a>
+						</p>
+					</div>
+					<ul class="common-title-left-ul" id="v-comprehensive-authors">
+						<li v-for="author in authors"><a href="authors?id={{ author.id }}">{{ author.name }}[{{ author.number }}]</a></li>
+					</ul>
+				</div>-->
+				
+				<!-- 发表时间 -->
+				<div class="container-fbsj">
+					<div class="common-title-left">
+						<p>
+							<img src="img/title-icon.png" alt="title-icon" />
+							<span>发表时间</span>
+							<a href="#">更多</a>
+						</p>
+					</div>
+					<ul class="common-title-left-ul v-mapQuery" id="v-map-year">
+						<li v-for="y in years"><a href="{{ url }}" val={{y.year}}>{{y.year}}<span>({{ y.number }})</span></a></li>
+					</ul>
+				</div>
+				
+				<!-- 内容类型 -->
+				<div class="container-nrlx">
+					<div class="common-title-left">
+						<p>
+							<img src="img/title-icon.png" alt="title-icon" />
+							<span>内容类型</span>
+						</p>
+					</div>
+					<ul class="common-title-left-ul" id="v-types">
+						<li v-for="type in types"><a href="map?type={{ type.id }}">{{ type.name }}<span>({{ type.number }})</span></a></li>
+					</ul>
+				</div>
+			</div>
+			<!-- 左边内容 end -->
+			
+			<!-- 检索结果 start -->
+			<div class="search-result-right">
+				<div class="search-result-display" id="v-searchResult">
+					
+					<div class="search-result-item">
+                        <span style="color:#999;float: left; margin-top: 10px; padding-left: 20px;">共找到相关结果{{ result.total }}个</span>
+						<!--<input class="search-result-button" id="checkAll" type="button" onclick="checkedAll('ids')" value="全选" />
+						<input class="search-result-button" type="button" value="保存所选内容" />-->
+						<label for="">排序方式</label>
+						<select class="search-result-select result-page search-sort">
+							<option value="comprehensive">默认排序</option>
+							<option value="time">按时间降序</option>
+						</select>
+					</div>
+					<div class="search-result-list">
+						<table class="search-result-list-table" v-for="item in result.list">
+							<tr>
+								<!--<td rowspan="4" style="width: 30px;"><input type="checkbox" name="ids" /></td>-->
+								<td><a href="/articles?id={{ item.id }}&type={{ item.enType }}" class="list-font-one">{{ item.title }}</a>[{{ item.type }}]</td>
+							</tr>
+							<tr>
+								<td>{{ item.journal }}, {{item.year}}, 卷号:{{item.volume}}, 页码:{{item.startPage}}-{{item.endPage}}, 百度引用量:{{ item.baiduCitation }}</td>
+							</tr>
+							<tr>
+								<td>
+                                    <a v-for="a in item.author" href="/authors?view=data&id={{a.id}}" style="margin-right: 5px;color: #45A8A8;" target="_blank">{{a.name}}</a>
+                                    <!--<span>{{ item.author }}</span>-->
+                                </td>
+							</tr>
+							<tr>
+								<td><a class="list-font-two" href="/articles?id={{ item.id }}&type={{ item.enType }}">浏览</a> &nbsp;&nbsp;<span v-if="item.downloadURL">|&nbsp;&nbsp;<a class="list-font-two" href="{{ item.downloadURL }}">Adobe PDF</a></span></td>
+                                <!--<td><a class="list-font-two" href="/articles?id={{ item.id }}">浏览</a> &nbsp;&nbsp;|&nbsp;&nbsp;<a class="list-font-two" href="{{ item.downloadURL }}">Adobe PDF({{ item.size }})</a>&nbsp;&nbsp;|&nbsp;&nbsp;<span class="list-font-two" href="#">浏览/下载：{{ item.pv }}/{{ item.downloadNumber }}</span></span></td>-->
+							</tr>
+						</table>
+					</div>
+					<ul class="search-result-page"></ul>
+				</div>
+			</div>
+			<!-- 检索结果  end -->
+		</div>
+		
+		<div class="foot">
+			<div class="foot-content cf">
+				<img class="foot-logo" src="/img/small_logo.png">
+				<div class="foot-name">
+					<p class="foot-zh-name">中国农业大学机构知识库</p>
+					<p class="foot-en-name"><img src="/img/small_letter.png"></p>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

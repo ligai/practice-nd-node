@@ -1,0 +1,21 @@
+{
+  "name": "knowledge",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "d3": "^3.5.16",
+    "echarts": "^3.1.7",
+    "express": "^4.13.4",
+    "jquery-datetimepicker": "^2.5.3",
+    "nodemailer": "^2.5.0",
+    "nunjucks": "^3.0.0",
+    "urijs": "^1.17.1",
+    "vue": "^1.0.21"
+  }
+}
